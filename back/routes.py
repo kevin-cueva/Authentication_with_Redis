@@ -1,6 +1,6 @@
 
 from flask_restful import Resource, reqparse
-from flask import jsonify, request, session
+from flask import Response, jsonify, request, session
 from bson import ObjectId
 
 from connection_to_dabases import Mongo_connection, Redis_connection
@@ -30,11 +30,11 @@ class Login(Resource):
         data = Mongo_connection.collection.find_one({'email':email})
 
         if data is None:
-            return (jsonify({"error":"Unauthorized"}))
+            return Response("{'error':'Unauthorized'}",status=401, mimetype='application/json')
         if data['email'] != email:
-            return (jsonify({"error":"Unauthorized"}))
+            return Response("{'error':'Unauthorized'}",status=401, mimetype='application/json')
         if data['pass'] != password:
-            return (jsonify({"error":"Unauthorized"}))
+            return Response("{'error':'Unauthorized'}",status=401, mimetype='application/json')
         
         session['user_id'] = str(data['_id']) #Se almacena en la cookies
         return jsonify({'id':str(data['_id'])})

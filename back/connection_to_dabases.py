@@ -21,5 +21,5 @@ class Redis_connection:
                             decode_responses=True) # local connection
     
     def login_user(name, email, password):
-        pass
+        r = redis.StrictRedis(host="localhost", port=6379, charset="utf-8", decode_responses=True) # Conexion
     
