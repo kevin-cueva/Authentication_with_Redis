@@ -16,7 +16,7 @@ app.config['SECRET_KEY'] ="hhjasjankasjhdkalsknkjajasgjhgkgggg99n"
 bcrypt = Bcrypt(app)
 
 
-cors = CORS(app)
+CORS(app, supports_credentials=True)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 api = Api(app)

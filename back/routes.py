@@ -2,7 +2,7 @@
 from flask_restful import Resource, reqparse
 from flask import Response, jsonify, request, session
 from bson import ObjectId
-
+from flask_cors import cross_origin
 from connection_to_dabases import Mongo_connection, Redis_connection
 
 class Created_usuario(Resource):
@@ -37,13 +37,15 @@ class Login(Resource):
             return Response("{'error':'Unauthorized'}",status=401, mimetype='application/json')
         
         session['user_id'] = str(data['_id']) #Se almacena en la cookies
+        print(session['user_id'])
         return jsonify({'id':str(data['_id'])})
 
 class Init_page(Resource):
     def get(self):
         user_id = session.get("user_id") # Recupera el valor almacenado en la cookie
+        print(user_id)
         if not user_id:
-            return (jsonify({"error":"Unauthorized"}))
+            return Response("{'error':'Unauthorized'}",status=401, mimetype='application/json')
 
         user = Mongo_connection.collection.find_one({'_id':ObjectId(user_id)})
         print(user)
