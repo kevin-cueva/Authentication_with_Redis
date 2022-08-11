@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import {helpHttp} from '../helpers/helpHttp'
 import httpClient from "../helpers/httpClient";  //Utilizando axios
+
 const LandingPage = () =>{
     const [user, setUser] = useState(null);
     let URL = "http://127.0.0.1:5000/user"
@@ -31,21 +32,40 @@ const LandingPage = () =>{
             }
           )
     },[]) */
+    
+    /* 
+    * COnsulta para salir de la sesion  
+    */
+    const logoutUser = async () =>{
+      await httpClient.post("http://127.0.0.1:5000/logout");
+      window.location.href="/"; //Dirigelo a la misma ruta
+      location.reload(); // Recarga la pagina
+    }
+
     return(
         <div>
             
             <h1>Welcome React Aplications</h1>
-            {user ? <h4>{user.nombre}</h4> : <h4>No esta logeado</h4>}
+            {user ?( 
+                    <div>
+                      <h4>{user.nombre}</h4> 
+                      
+                      <button type="button" onClick={logoutUser}>Logout</button>
+                      
+                    </div>
+            ):( 
+                  <div>
+                  <h4>No esta logeado</h4>
+                    <a href="/login">
+                        <button>Login</button>  
+                    </a>
+                    <a href="/register">
+                    <button>Register</button>
+                    </a>     
+                </div>)
+            }
             
-            <div>
-                <a href="/login">
-                    <button>Login</button>  
-                </a>
-                <a href="/register">
-                <button>Register</button>
-                </a>
-                    
-            </div>
+            
 
         </div>
     );

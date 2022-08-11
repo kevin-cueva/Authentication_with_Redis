@@ -50,3 +50,8 @@ class Init_page(Resource):
         user = Mongo_connection.collection.find_one({'_id':ObjectId(user_id)})
         print(user)
         return jsonify({"nombre":user['nombre'], "email":user['email']})
+
+class Logout(Resource):
+    def post(self):
+        session.pop("user_id") #Elimina
+        return Response("{'header':'ok'}",status=200, mimetype='application/json')

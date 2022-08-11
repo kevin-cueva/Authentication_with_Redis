@@ -5,7 +5,7 @@ from flask_session import Session
 from flask_bcrypt import Bcrypt
 
 from flask_restful import Api
-from routes import Created_usuario, Login, Init_page
+from routes import Created_usuario, Login, Init_page, Logout
 
 
 
@@ -32,6 +32,7 @@ server_session = Session(app)
 api.add_resource(Created_usuario, '/register')
 api.add_resource(Login, '/login')
 api.add_resource(Init_page, '/user')
+api.add_resource(Logout, '/logout')
 
 
 if __name__ == '__main__':
